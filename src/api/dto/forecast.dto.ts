@@ -11,5 +11,5 @@ export class ForecastDto {
 
   @IsNotEmpty()
   @IsString()
-  exclude?: string;
+  exclude: string;
 }
