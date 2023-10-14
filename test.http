@@ -1,0 +1,21 @@
+@lat = 47.9105
+@lon = 33.3918
+@exclude = daily,hourly
+
+### Fetch forecast data
+// Will return 200 OK with fetched data.
+// Or will return 400 Bad Request, if no lat and lon query params provided.
+// Required query params: lat, lon, exclude([minutely, hourly, daily, alerts]. 
+// Exclude may contain multiple values without spaces between.
+
+POST http://localhost:3000/api/fetch-forecast?lat={{lat}}&lon={{lon}}&exclude={{exclude}}
+
+
+### Get forecast data
+// Will return 200 OK with data from database.
+// Or will return 400 Bad Request, if no lat and lon query params provided.
+// Or will return 404 Not found, if no such request is in database.
+// Required query params: lat, lon, exclude([minutely, hourly, daily, alerts].
+// Exclude may contain multiple values without spaces between. 
+
+GET http://localhost:3000/api/get-forecast?lat={{lat}}&lon={{lon}}&exclude={{exclude}}

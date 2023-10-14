@@ -1,0 +1,34 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USERNAME: $DB_USERNAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DATABASE: $DB_DATABASE
+    container_name: postgres-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: testapi-be
+    environment:
+      DB_HOST: db
+      DB_USERNAME: $DB_USERNAME
+      DB_PASSWORD: $DB_PASSWORD
+      DB_DATABASE: $DB_DATABASE
+      DB_PORT: $DB_PORT
+    ports:
+      - '3000:3000'
+    container_name: testapi-be
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata: {}
