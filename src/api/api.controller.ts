@@ -1,11 +1,14 @@
 import {
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Post,
   Query,
   UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
+import { error } from 'console';
 import { ApiService } from './api.service';
 import { ForecastDto } from './dto/forecast.dto';
 import { CustomInterceptors } from './interceptors/custom.interceptor';
@@ -20,7 +23,20 @@ export class ApiController {
     @Query(new ValidationPipe())
     forecastDto: ForecastDto,
   ) {
-    return this.apiService.getForecast(forecastDto);
+    try {
+      return this.apiService.getForecast(forecastDto);
+    } catch {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'There is an error!',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        {
+          cause: error,
+        },
+      );
+    }
   }
 
   @Post('/fetch-forecast')
@@ -28,6 +44,19 @@ export class ApiController {
     @Query(new ValidationPipe())
     forecastDto: ForecastDto,
   ) {
-    return this.apiService.fetchForecast(forecastDto);
+    try {
+      return this.apiService.fetchForecast(forecastDto);
+    } catch {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'There is an error!',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        {
+          cause: error,
+        },
+      );
+    }
   }
 }

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 import { DataSource, Repository } from 'typeorm';
@@ -37,9 +41,11 @@ export class ApiRepository extends Repository<Api> {
     const API = this.configService.get('API_ENDPOINT');
     const API_KEY = this.configService.get('API_KEY');
 
-    const response = await axios.get(
-      `${API}?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${API_KEY}`,
-    );
+    const response = await axios
+      .get(`${API}?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${API_KEY}`)
+      .catch((err) => {
+        throw new BadRequestException(err);
+      });
 
     const result = this.create({
       lat,
