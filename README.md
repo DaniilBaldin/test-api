@@ -8,18 +8,18 @@ To run API, add .env file, similar to provided .env.example
 
 **Test start**
 
-### To start test server, follow this steps:
+**To start test server, follow this steps:**
 
 1.  `npm i`
 2.  `npm run start:dev`
 
-### To start prod server, follow this steps:
+**To start prod server, follow this steps:**
 
 1.  `npm i`
 2.  `npm run build`
 3.  `npm run start:prod`
 
-### To run docker container, use this command:
+**To run docker container, use this command:**
 
 1.  `docker-compose up`
 
